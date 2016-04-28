@@ -1,13 +1,13 @@
 name:                haskell-data-structures
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            Implementation of functional data structures
 description:         Please see README.md
-homepage:            https://github.com/githubuser/haskell-data-structures#readme
+homepage:            https://github.com/paulo-tutorials/haskell-data-structures
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2016 Author name here
+author:              paulojean
+maintainer:          
+copyright:           2016 paulojean
 category:            Web
 build-type:          Simple
 -- extra-source-files:
@@ -27,7 +27,6 @@ test-suite haskell-data-structures-test
   build-depends:       base
                      , haskell-data-structures
                      , hspec
-                     , QuickCheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
