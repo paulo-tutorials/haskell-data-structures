@@ -36,3 +36,28 @@ spec = context "basics operation on Stack" $ do
             stail (Cons 42 (Cons 71 Empty))
                 `shouldBe`
                     (Cons 71 Empty)
+
+    describe "update" $ do
+        it "the first element of the stack" $ do
+            update (Cons "olar" (Cons "update" Empty)) 0 "such"
+                `shouldBe`
+                    (Cons "such" (Cons "update" Empty))
+        it "the middle element of the stack" $ do
+            update (Cons "such" (Cons "abc" (Cons "wow" Empty))) 1 "update"
+                `shouldBe`
+                    (Cons "such" (Cons "update" (Cons "wow" Empty)))
+
+    describe "+++ (concatenate operation)" $ do
+        it "return a five elements stack when pass a two elements and a three elements stack" $ do
+            (Cons True (Cons False Empty)) +++ (Cons False (Cons True (Cons True Empty)))
+                `shouldBe`
+                    (Cons True (Cons False (Cons False (Cons True (Cons True Empty)))))
+        it "returns the same result when the first or second parameter is Empty" $ do
+            (Cons 41 Empty) +++ Empty
+                `shouldBe`
+                    Empty +++ (Cons 41 Empty)
+        it "returns a empty stack when both parameters are Empty" $ do
+            Empty +++ Empty
+                `shouldBe`
+                    (stail (Cons 1 Empty))
+
