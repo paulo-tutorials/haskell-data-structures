@@ -22,3 +22,10 @@ spec = context "using Set as element" $ do
             insert 0 (Elem 5 (Elem 3 Empty Empty) (Elem 15 Empty Empty))
                 `shouldBe`
                     (Elem 5 (Elem 3 (Elem 0 Empty Empty) Empty) (Elem 15 Empty Empty))
+    describe "verify that `a` (algorithm O(d))" $ do
+        it "is member of a tree" $ do
+            member' 1 (Elem 3 (Elem 1 Empty Empty) (Elem 7 Empty Empty))
+                `shouldBe` True
+        it "is not member of tree" $ do
+            member' 10 (Elem 3 (Elem 1 Empty Empty) (Elem 7 Empty Empty))
+                `shouldBe` False
