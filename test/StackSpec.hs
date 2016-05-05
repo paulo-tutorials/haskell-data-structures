@@ -60,4 +60,8 @@ spec = context "basics operation on Stack" $ do
             Empty +++ Empty
                 `shouldBe`
                     (stail (Cons 1 Empty))
-
+    describe "obtain the sufixes" $ do
+        it "of [1, 2, 3, 4]" $ do
+            sufixes [1, 2, 3, 4]
+                `shouldBe`
+		[[1, 2, 3, 4], [2, 3, 4], [3, 4], [4], []]

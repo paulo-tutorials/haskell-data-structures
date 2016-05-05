@@ -5,7 +5,8 @@ module Stack
 , shead
 , stail
 , update
-, (+++) )
+, (+++)
+, sufixes)
 where
 
 data Stack a = Cons a (Stack a) | Empty deriving (Eq, Show)
@@ -37,3 +38,7 @@ x +++ Empty = x
 Empty +++ y = y
 (Cons x Empty) +++ y = Cons x y
 (Cons x rest) +++ y = Cons x $ rest +++ y
+
+sufixes :: [a] -> [[a]]
+sufixes [] = [[]]
+sufixes r@(x:xs) = (r:sufixes xs)
