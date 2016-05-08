@@ -1,37 +1,31 @@
-module Tree 
-( Tree(..)
-, member
-, insert
-, member')
-where
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FunctionalDependencies #-}
+module Tree(Tree(..)) where
+
+import qualified Set.Set as S
 
 data Tree a = T (Tree a) a (Tree a) | E 
     deriving (Show, Ord, Eq)
 
-member :: Ord a => a -> Tree a -> Bool
-member _ E = False
-member a (T left x right)
-    | a < x = member a left
-    | a > x = member a right
-    | otherwise = True
+instance (Ord a) => S.Set (Tree a) a where
+    empty = E
+    
+    insert a E = T E a E
+    insert a t@(T left x right)
+        | a < x = T (S.insert a left) x right
+        | a > x = T left x (S.insert a right)
+        | otherwise = t
 
-insert :: Ord a => a -> Tree a -> Tree a
-insert a E = T E a E
-insert a t@(T left x right)
-    | a < x = T (insert a left) x right
-    | a > x = T left x (insert a right)
-    | otherwise = t
+    member _ E = False
+    member a (T left x right)
+        | a < x = S.member a left 
+        | otherwise = member' a right x
 
-member' :: Ord a => a -> Tree a -> Bool
-member' _ E = False
-member' a (T left x right)
-    | a < x = member' a left
-    | otherwise = member'1 a right x
-
-member'1 :: Ord a => a -> Tree a -> a -> Bool
-member'1 a E candidate
+member' :: (Ord a) => a -> Tree a -> a -> Bool
+member' a E candidate
     | a > candidate = False
     | otherwise = True
-member'1 a (T left x right) candidate
-    | a < x = member'1 a left candidate
-    | otherwise = member'1 a right x
+member' a (T left x right) candidate
+    | a < x = member' a left candidate
+    | otherwise = member' a right x
