@@ -3,7 +3,8 @@
 {-# LANGUAGE FunctionalDependencies #-}
 module UnbalancedSet
 ( UnbalancedSet(..)
-, member') 
+, member'
+, insert') 
 where
 
 import qualified Set.Set as S
@@ -38,3 +39,15 @@ member' a (T left x right)
             member'1 b (T left y right) candidate
                 | b < y = member'1 b left candidate
                 | otherwise = member'1 b right y
+
+-- exercise 2.3
+insert' :: Ord a => a -> UnbalancedSet a -> UnbalancedSet a
+insert' a E = T E a E 
+insert' a t@(T left x right)
+    | member' a t = t
+    | otherwise = insert'1 a t
+    where insert'1 b E = T E b E
+          insert'1 b u@(T left y right)
+              | b < y = T (insert'1 b left) y right
+              | b > y = T left y (insert'1 b right)
+              | otherwise = u
