@@ -32,7 +32,7 @@ instance (Ord a) => S.Set (UnbalancedSet a) a where
 member' :: (Ord a) => a -> UnbalancedSet a -> Bool
 member' _ E = False
 member' a (T left x right)
-    | a < x = S.member a left 
+    | a < x = member' a left 
     | otherwise = member'1 a right x
     where   member'1 b E candidate
                 | b > candidate = False
