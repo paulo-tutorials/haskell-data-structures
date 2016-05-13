@@ -4,7 +4,8 @@
 module UnbalancedSet
 ( UnbalancedSet(..)
 , member'
-, insert') 
+, insert'
+, insert'1) 
 where
 
 import qualified Set.Set as S
@@ -51,3 +52,24 @@ insert' a t@(T left x right)
               | b < y = T (insert'1 b left) y right
               | b > y = T left y (insert'1 b right)
               | otherwise = u
+
+-- exercise 2.4
+insert'1 :: Ord a => a -> UnbalancedSet a -> UnbalancedSet a
+insert'1 a t = result $ tryInsert a t
+    where   result Nothing = t
+            result (Just x)  = x
+
+tryInsert :: Ord a => a -> UnbalancedSet a -> Maybe (UnbalancedSet a)
+tryInsert a E = Just (T E a E)
+tryInsert a t@(T left x right)
+    | a < x = makeMaybeTree (tryInsert a left) x (Just right)
+    | otherwise = makeMaybeTree (Just left) x (tryInsert' a right x)
+    where   tryInsert' b E candidate
+                | b > candidate = Just (T (T E candidate E) b E)
+                | otherwise     = Nothing
+            tryInsert' b (T left y right) candidate
+                | b < y         = makeMaybeTree (tryInsert' b left candidate) b (Just right)
+                | otherwise     = makeMaybeTree (Just left) y (tryInsert' b right y)
+            makeMaybeTree Nothing _ _         = Nothing
+            makeMaybeTree _ _ Nothing         = Nothing
+            makeMaybeTree (Just l) v (Just r) = Just (T l v r)

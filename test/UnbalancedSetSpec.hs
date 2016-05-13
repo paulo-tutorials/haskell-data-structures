@@ -39,3 +39,12 @@ spec = context "using Set as element" $ do
             insert' 0 (T (T E 3 E) 5 (T (T E 7 E) 15 E))
                 `shouldBe`
                     (T (T (T E 0 E) 3 E) 5 (T (T E 7 E) 15 E))
+    describe "insert an item a (ex 2.4)" $ do
+        it "in a UnbalancedSet that already contain it" $ do
+            insert'1 7 (T (T E 3 E) 5 (T (T E 7 E) 15 E))
+                `shouldBe`
+                    (T (T E 3 E) 5 (T (T E 7 E) 15 E))
+        it "in a UnbalancedSet that do not contain it" $ do
+            insert'1 0 (T (T E 3 E) 5 (T (T E 7 E) 15 E))
+                `shouldBe`
+                    (T (T (T E 0 E) 3 E) 5 (T (T E 7 E) 15 E))
