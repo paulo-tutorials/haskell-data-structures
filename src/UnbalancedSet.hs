@@ -5,7 +5,9 @@ module UnbalancedSet
 ( UnbalancedSet(..)
 , member'
 , insert'
-, insert'1) 
+, insert'1
+, complete
+, create2) 
 where
 
 import qualified Set.Set as S
@@ -73,3 +75,15 @@ tryInsert a t@(T left x right)
             makeMaybeTree Nothing _ _         = Nothing
             makeMaybeTree _ _ Nothing         = Nothing
             makeMaybeTree (Just l) v (Just r) = Just (T l v r)
+
+-- exercise 2.5.a
+complete :: a -> Int -> UnbalancedSet a
+complete _ 0 = E
+complete x n = T subtree x subtree
+    where subtree = complete x (n - 1)
+
+-- exercise 2.5.b
+create2 :: a -> Int -> UnbalancedSet a
+create2 _ 0 = E
+create2 x n = T subtree x (T E x subtree)
+    where subtree = create2 x (n - 1)

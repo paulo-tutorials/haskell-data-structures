@@ -48,3 +48,20 @@ spec = context "using Set as element" $ do
             insert'1 0 (T (T E 3 E) 5 (T (T E 7 E) 15 E))
                 `shouldBe`
                     (T (T (T E 0 E) 3 E) 5 (T (T E 7 E) 15 E))
+    describe "unsing complete function" $ do
+        it "generete a UnbalancedSet with depth 3" $ do
+            complete 'q' 3
+                `shouldBe`
+                    T (T (T E 'q' E) 'q' (T E 'q' E)) 'q' (T (T E 'q' E) 'q' (T E 'q' E))
+    describe "unsing complete function" $ do
+        it "generete a UnbalancedSet with depth 3" $ do
+            create2 'q' 3
+                `shouldBe`
+                    T (T (T E 'q' (T E 'q' E)) 'q' (T E 'q' (T E 'q' (T E 'q' E)))) 
+                      'q' 
+                      (T E 'q' (T (T E 'q' (T E 'q' E)) 
+                                    'q' 
+                                    (T E 'q' (T E 'q' (T E 'q' E)))))
+
+
+
