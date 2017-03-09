@@ -9,3 +9,4 @@ Install [Stack](http://docs.haskellstack.org/), then run:
 
 ## Test
 `stack test`
+
